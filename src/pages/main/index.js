@@ -1,5 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
+import PropTypes from 'prop-types'
 import {
   Container,
   Grid,
@@ -11,8 +12,9 @@ import {
 import { Close } from '@material-ui/icons'
 import { useHistory } from 'react-router'
 import TableCustom from '../../components/TableCustom'
+import { connect } from 'react-redux'
 
-const Main = () => {
+const Main = ({ funcionarios }) => {
   const classes = useStyles()
   const { push } = useHistory()
 
@@ -50,7 +52,7 @@ const Main = () => {
             </Grid>
             <Grid item xs={12}>
               <Paper className={classes.paper}>
-                <TableCustom />
+                <TableCustom funcionarios={funcionarios} />
               </Paper>
             </Grid>
           </Grid>
@@ -95,4 +97,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default Main
+Main.propTypes = {
+  funcionarios: PropTypes.array,
+}
+export default connect((state) => ({ funcionarios: state.funcionarios }))(Main)
