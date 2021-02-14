@@ -37,8 +37,8 @@ const Main = ({ funcionarios }) => {
                 <Paper component="form" className={classes.root2}>
                   <InputBase
                     className={classes.input}
-                    placeholder="Buscar cliente"
-                    inputProps={{ 'aria-label': 'Buscar clientes' }}
+                    placeholder="Buscar funcionário"
+                    inputProps={{ 'aria-label': 'Buscar funcionário' }}
                   />
                   <IconButton
                     type="submit"

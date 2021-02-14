@@ -64,6 +64,13 @@ export default function funcionarioReducer(state = initialState, action) {
           }
         }),
       }
+    case 'EXCLUIR_FUNCIONARIO':
+      return {
+        ...state,
+        funcionarios: state.funcionarios.filter(
+          (funcionario) => funcionario.id != action.payload,
+        ),
+      }
     default:
       return state
   }

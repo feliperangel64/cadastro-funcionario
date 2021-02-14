@@ -11,3 +11,10 @@ export const Edit = (payload) => {
     payload: payload,
   }
 }
+
+export const Delete = (payload) => {
+  return {
+    type: 'EXCLUIR_FUNCIONARIO',
+    payload: payload,
+  }
+}

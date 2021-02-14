@@ -11,6 +11,7 @@ import {
   Typography,
   Grid,
 } from '@material-ui/core'
+import ModalCustom from '../../components/ModalCustom'
 
 const TableCustom = ({ funcionarios }) => {
   return (
@@ -44,7 +45,9 @@ const TableCustom = ({ funcionarios }) => {
                       <Edit color="primary" />
                     </Link>
                   </Grid>
-                  <Grid item></Grid>
+                  <Grid item>
+                    <ModalCustom id={funcionario.id} />
+                  </Grid>
                 </Grid>
               </TableCell>
             </TableRow>

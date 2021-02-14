@@ -85,7 +85,7 @@ function Form({ funcionarios, dispatch }) {
   return (
     <>
       <Typography variant="h6" gutterBottom>
-        Dados do cliente
+        Dados do funcionário
       </Typography>
       <form onSubmit={handleSubmit}>
         <Grid container spacing={3}>
