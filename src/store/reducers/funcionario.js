@@ -1,4 +1,4 @@
-const INITIAL_STATE = {
+const initialState = {
   funcionarios: [
     {
       id: 1,
@@ -48,9 +48,23 @@ const INITIAL_STATE = {
   ],
 }
 
-export default function funcionarioReducer(state = INITIAL_STATE, action) {
-  if (action.type == 'ADICIONAR_FUNCIONARIO') {
-    return { ...state, ...state.funcionarios.push(action.payload) }
+export default function funcionarioReducer(state = initialState, action) {
+  switch (action.type) {
+    case 'ADICIONAR_FUNCIONARIO':
+      return { ...state, funcionarios: [...state.funcionarios, action.payload] }
+    case 'EDITAR_FUNCIONARIO':
+      return {
+        ...state,
+        funcionarios: state.funcionarios.map((funcionario) => {
+          if (funcionario.id != action.payload.id) {
+            return funcionario
+          }
+          return {
+            ...action.payload,
+          }
+        }),
+      }
+    default:
+      return state
   }
-  return state
 }

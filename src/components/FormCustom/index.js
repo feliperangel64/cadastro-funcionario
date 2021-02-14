@@ -1,8 +1,8 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { makeStyles } from '@material-ui/core/styles'
 import { Grid, Typography, TextField, Button } from '@material-ui/core'
 import { connect } from 'react-redux'
-import { useHistory } from 'react-router-dom'
+import { useHistory, useParams } from 'react-router-dom'
 import * as FuncionarioAction from '../../store/actions/funcionario'
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +22,9 @@ const useStyles = makeStyles((theme) => ({
 function Form({ funcionarios, dispatch }) {
   const classes = useStyles()
   const history = useHistory()
-  const [state, setState] = React.useState({
+  const { id } = useParams()
+
+  const [state, setState] = useState({
     Nome: '',
     Cpf: '',
     Salario: '',
@@ -30,22 +32,51 @@ function Form({ funcionarios, dispatch }) {
     Dependentes: '',
   })
 
+  useEffect(() => {
+    if (id) {
+      const editFuncionario = funcionarios.filter(
+        (funcionario) => funcionario.id == id,
+      )[0]
+      setState({
+        Id: editFuncionario.id,
+        Nome: editFuncionario.nome,
+        Cpf: editFuncionario.cpf,
+        Salario: editFuncionario.salario,
+        Desconto: editFuncionario.desconto,
+        Dependentes: editFuncionario.dependentes,
+      })
+    }
+  }, [])
+
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.value })
   }
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    const novoFuncionario = {
-      id: funcionarios.length + 1,
-      nome: state.Nome,
-      cpf: state.Cpf,
-      salario: state.Salario,
-      desconto: state.Desconto,
-      dependentes: state.Dependentes,
-      descontoIrpf: 0,
+    if (id) {
+      const editFuncionario = {
+        id: state.Id,
+        nome: state.Nome,
+        cpf: state.Cpf,
+        salario: state.Salario,
+        desconto: state.Desconto,
+        dependentes: state.Dependentes,
+        descontoIrpf: 0,
+      }
+      dispatch(FuncionarioAction.Edit(editFuncionario))
+    } else {
+      const novoFuncionario = {
+        id: funcionarios.length + 1,
+        nome: state.Nome,
+        cpf: state.Cpf,
+        salario: state.Salario,
+        desconto: state.Desconto,
+        dependentes: state.Dependentes,
+        descontoIrpf: 0,
+      }
+      dispatch(FuncionarioAction.Add(novoFuncionario))
     }
-    dispatch(FuncionarioAction.Add(novoFuncionario))
     history.push('/')
   }
 

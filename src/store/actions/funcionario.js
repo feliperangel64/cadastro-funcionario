@@ -4,3 +4,10 @@ export const Add = (payload) => {
     payload: payload,
   }
 }
+
+export const Edit = (payload) => {
+  return {
+    type: 'EDITAR_FUNCIONARIO',
+    payload: payload,
+  }
+}

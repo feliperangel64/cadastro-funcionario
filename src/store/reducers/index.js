@@ -1,6 +1,8 @@
 import { combineReducers } from 'redux'
 import funcionarioReducer from './funcionario'
 
-export default combineReducers({
+const rootReducer = combineReducers({
   funcionarioReducer,
 })
+
+export default rootReducer
