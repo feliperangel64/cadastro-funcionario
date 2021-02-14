@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Grid, Typography, TextField, Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { useHistory } from 'react-router-dom'
+import * as FuncionarioAction from '../../store/actions/funcionario'
 
 const useStyles = makeStyles((theme) => ({
   radio: {
@@ -33,24 +34,18 @@ function Form({ funcionarios, dispatch }) {
     setState({ ...state, [event.target.name]: event.target.value })
   }
 
-  const actionAddFuncionario = () => {
-    return {
-      type: 'ADICIONAR_FUNCIONARIO',
-      payload: {
-        id: funcionarios.length + 1,
-        nome: state.Nome,
-        cpf: state.Cpf,
-        salario: state.Salario,
-        desconto: state.Desconto,
-        dependentes: state.Dependentes,
-        descontoIrpf: 0,
-      },
-    }
-  }
-
   const handleSubmit = async (e) => {
     e.preventDefault()
-    dispatch(actionAddFuncionario())
+    const novoFuncionario = {
+      id: funcionarios.length + 1,
+      nome: state.Nome,
+      cpf: state.Cpf,
+      salario: state.Salario,
+      desconto: state.Desconto,
+      dependentes: state.Dependentes,
+      descontoIrpf: 0,
+    }
+    dispatch(FuncionarioAction.Add(novoFuncionario))
     history.push('/')
   }
 
