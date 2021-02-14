@@ -100,4 +100,6 @@ const useStyles = makeStyles((theme) => ({
 Main.propTypes = {
   funcionarios: PropTypes.array,
 }
-export default connect((state) => ({ funcionarios: state.funcionarios }))(Main)
+export default connect((state) => ({
+  funcionarios: state.funcionarioReducer.funcionarios,
+}))(Main)

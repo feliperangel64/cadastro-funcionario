@@ -138,4 +138,6 @@ function Form({ funcionarios, dispatch }) {
     </>
   )
 }
-export default connect((state) => ({ funcionarios: state.funcionarios }))(Form)
+export default connect((state) => ({
+  funcionarios: state.funcionarioReducer.funcionarios,
+}))(Form)
