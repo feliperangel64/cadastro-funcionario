@@ -28,7 +28,7 @@ const Main = ({ funcionarios }) => {
                 <Button
                   variant="contained"
                   color="primary"
-                  onClick={() => push('/new')}
+                  onClick={() => push('/add')}
                 >
                   Adicionar
                 </Button>
