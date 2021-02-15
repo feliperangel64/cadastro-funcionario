@@ -30,28 +30,48 @@ const TableCustom = ({ funcionarios }) => {
           </TableRow>
         </TableHead>
         <TableBody>
-          {funcionarios.map((funcionario) => (
-            <TableRow key={funcionario.id}>
-              <TableCell>{funcionario.nome}</TableCell>
-              <TableCell>{funcionario.cpf}</TableCell>
-              <TableCell>{funcionario.salario}</TableCell>
-              <TableCell>{funcionario.desconto}</TableCell>
-              <TableCell>{funcionario.dependentes}</TableCell>
-              <TableCell>{funcionario.descontoIrpf}</TableCell>
-              <TableCell>
-                <Grid container spacing={2}>
-                  <Grid item>
-                    <Link to={`/edit/${funcionario.id}`}>
-                      <Edit color="primary" />
-                    </Link>
+          {funcionarios.map((funcionario) => {
+            return (
+              <TableRow key={funcionario.id}>
+                <TableCell>{funcionario.nome}</TableCell>
+                <TableCell>{funcionario.cpf}</TableCell>
+                <TableCell>
+                  {parseFloat(funcionario.salario, 10).toLocaleString('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL',
+                  })}
+                </TableCell>
+                <TableCell>
+                  {parseFloat(funcionario.desconto, 10).toLocaleString(
+                    'pt-BR',
+                    { style: 'currency', currency: 'BRL' },
+                  )}
+                </TableCell>
+                <TableCell>{funcionario.dependentes}</TableCell>
+                <TableCell>
+                  {parseFloat(funcionario.descontoIrpf, 10).toLocaleString(
+                    'pt-BR',
+                    {
+                      style: 'currency',
+                      currency: 'BRL',
+                    },
+                  )}
+                </TableCell>
+                <TableCell>
+                  <Grid container spacing={2}>
+                    <Grid item>
+                      <Link to={`/edit/${funcionario.id}`}>
+                        <Edit color="primary" />
+                      </Link>
+                    </Grid>
+                    <Grid item>
+                      <ModalCustom id={funcionario.id} />
+                    </Grid>
                   </Grid>
-                  <Grid item>
-                    <ModalCustom id={funcionario.id} />
-                  </Grid>
-                </Grid>
-              </TableCell>
-            </TableRow>
-          ))}
+                </TableCell>
+              </TableRow>
+            )
+          })}
         </TableBody>
       </Table>
     </>

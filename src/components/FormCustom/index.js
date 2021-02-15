@@ -30,6 +30,7 @@ function FormCustom({ funcionarios, dispatch }) {
     salario: '',
     desconto: '',
     dependentes: '',
+    descontoIrpf: '',
   })
 
   useEffect(() => {
@@ -37,7 +38,7 @@ function FormCustom({ funcionarios, dispatch }) {
       const editFuncionario = funcionarios.filter(
         (funcionario) => funcionario.id == idParam,
       )[0]
-      setState({ ...editFuncionario })
+      setState({ ...editFuncionario, descontoIrpf: calculaDescontoIprf() })
     }
   }, [])
 
@@ -97,7 +98,12 @@ function FormCustom({ funcionarios, dispatch }) {
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (idParam) {
-      dispatch(FuncionarioAction.Edit({ ...state }))
+      dispatch(
+        FuncionarioAction.Edit({
+          ...state,
+          descontoIrpf: calculaDescontoIprf(),
+        }),
+      )
     } else {
       const novoFuncionario = {
         ...state,

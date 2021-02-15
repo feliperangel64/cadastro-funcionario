@@ -7,7 +7,7 @@ const initialState = {
       salario: 998,
       desconto: 74.85,
       dependentes: 2,
-      descontoIrpf: 0,
+      descontoIrpf: 0.0,
     },
     {
       id: 2,
@@ -16,7 +16,7 @@ const initialState = {
       salario: 1045,
       desconto: 78.38,
       dependentes: 1,
-      descontoIrpf: 0,
+      descontoIrpf: 0.0,
     },
     {
       id: 3,
@@ -25,7 +25,7 @@ const initialState = {
       salario: 5500,
       desconto: 628.95,
       dependentes: 0,
-      descontoIrpf: 0,
+      descontoIrpf: 470.18,
     },
     {
       id: 4,
@@ -34,7 +34,7 @@ const initialState = {
       salario: 4522,
       desconto: 492.03,
       dependentes: 3,
-      descontoIrpf: 0,
+      descontoIrpf: 159.54,
     },
     {
       id: 5,
@@ -43,7 +43,7 @@ const initialState = {
       salario: 10000,
       desconto: 713.1,
       dependentes: 4,
-      descontoIrpf: 0,
+      descontoIrpf: 1503.52,
     },
   ],
 }
