@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import { Grid, Typography, TextField, Button } from '@material-ui/core'
 import { connect } from 'react-redux'
 import { useHistory, useParams } from 'react-router-dom'
+import { cpfMask, moneyMask } from '../../utils'
 import * as FuncionarioAction from '../../store/actions/funcionario'
 
 const useStyles = makeStyles((theme) => ({
@@ -44,6 +45,14 @@ function FormCustom({ funcionarios, dispatch }) {
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.value })
+  }
+
+  const handleChangeCpf = (event) => {
+    setState({ ...state, [event.target.name]: cpfMask(event.target.value) })
+  }
+
+  const handleChangeMoney = (event) => {
+    setState({ ...state, [event.target.name]: moneyMask(event.target.value) })
   }
 
   //Salário Base IR = Salário bruto - Desconto da Previdência - Dedução por Dependente x Quantidade de Dependentes
@@ -144,7 +153,7 @@ function FormCustom({ funcionarios, dispatch }) {
               name="cpf"
               label="CPF"
               value={cpf}
-              onChange={handleChange}
+              onChange={handleChangeCpf}
               fullWidth
               required
               data-testid="form-custom-field-cpf"
@@ -157,7 +166,7 @@ function FormCustom({ funcionarios, dispatch }) {
               name="salario"
               label="Salário bruto"
               value={salario}
-              onChange={handleChange}
+              onChange={handleChangeMoney}
               fullWidth
               required
               data-testid="form-custom-field-salario"
@@ -170,7 +179,7 @@ function FormCustom({ funcionarios, dispatch }) {
               name="desconto"
               label="Desconto da previdência"
               value={desconto}
-              onChange={handleChange}
+              onChange={handleChangeMoney}
               fullWidth
               required
               data-testid="form-custom-field-desconto"
