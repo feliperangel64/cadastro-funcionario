@@ -52,6 +52,55 @@ function Form({ funcionarios, dispatch }) {
     setState({ ...state, [event.target.name]: event.target.value })
   }
 
+  //Salário Base IR = Salário bruto - Desconto da Previdência - Dedução por Dependente x Quantidade de Dependentes
+  const calculaSalarioBase = () => {
+    let salarioBase = 0
+    const deducaoDependente = 164.56
+    const { Salario, Desconto, Dependentes } = state
+    salarioBase = Salario - Desconto - deducaoDependente * Dependentes
+    return salarioBase
+  }
+
+  //Tabela progressiva do IRRF
+  const getValoresIrpf = () => {
+    const { Salario } = state
+
+    //Até R$ 1.903,98 Isento R$ 0,00
+    if (Salario <= 1903.98) {
+      return { aliquota: 0, parcela: 0 }
+    }
+
+    //De R$ 1.903,99 até R$ 2.826,65 7,5% R$ 142,80
+    if (Salario >= 1903.99 && Salario <= 2826.65) {
+      return { aliquota: 7.5 / 100, parcela: 142.8 }
+    }
+
+    //De R$ 2.826,66 até R$ 3.751,05 15% R$ 354,80
+    if (Salario >= 2826.66 && Salario <= 3751.05) {
+      return { aliquota: 15.0 / 100, parcela: 354.8 }
+    }
+
+    //De R$ 3.751,06 até R$ 4.664,68 22,5% R$ 636,13
+    if (Salario >= 3751.06 && Salario <= 4664.68) {
+      return { aliquota: 22.5 / 100, parcela: 636.13 }
+    }
+
+    //Acima de R$ 4.664,68 27,5% R$869,36
+    if (Salario > 4664.68) {
+      return { aliquota: 27.5 / 100, parcela: 869.36 }
+    }
+  }
+
+  //Desconto IRRF = Salário Base IR x Alíquota - Parcela a Deduzir
+  const calculaDescontoIprf = () => {
+    let descontoIrpf = 0
+    const salarioBase = calculaSalarioBase()
+    const irpf = getValoresIrpf()
+    descontoIrpf = salarioBase * irpf.aliquota - irpf.parcela
+
+    return descontoIrpf
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (id) {
@@ -62,7 +111,7 @@ function Form({ funcionarios, dispatch }) {
         salario: state.Salario,
         desconto: state.Desconto,
         dependentes: state.Dependentes,
-        descontoIrpf: 0,
+        descontoIrpf: calculaDescontoIprf(),
       }
       dispatch(FuncionarioAction.Edit(editFuncionario))
     } else {
@@ -73,7 +122,7 @@ function Form({ funcionarios, dispatch }) {
         salario: state.Salario,
         desconto: state.Desconto,
         dependentes: state.Dependentes,
-        descontoIrpf: 0,
+        descontoIrpf: calculaDescontoIprf(),
       }
       dispatch(FuncionarioAction.Add(novoFuncionario))
     }
