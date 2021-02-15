@@ -116,7 +116,7 @@ function FormCustom({ funcionarios, dispatch }) {
       <Typography variant="h6" gutterBottom>
         Dados do funcionário
       </Typography>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} data-testid="form-custom">
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <TextField
@@ -128,6 +128,7 @@ function FormCustom({ funcionarios, dispatch }) {
               inputProps={{ maxLength: 100 }}
               fullWidth
               required
+              data-testid="form-custom-field-nome"
             />
           </Grid>
 
@@ -140,6 +141,7 @@ function FormCustom({ funcionarios, dispatch }) {
               onChange={handleChange}
               fullWidth
               required
+              data-testid="form-custom-field-cpf"
             />
           </Grid>
 
@@ -152,6 +154,7 @@ function FormCustom({ funcionarios, dispatch }) {
               onChange={handleChange}
               fullWidth
               required
+              data-testid="form-custom-field-salario"
             />
           </Grid>
 
@@ -164,6 +167,7 @@ function FormCustom({ funcionarios, dispatch }) {
               onChange={handleChange}
               fullWidth
               required
+              data-testid="form-custom-field-desconto"
             />
           </Grid>
 
@@ -176,6 +180,7 @@ function FormCustom({ funcionarios, dispatch }) {
               onChange={handleChange}
               fullWidth
               required
+              data-testid="form-custom-field-dependentes"
             />
           </Grid>
         </Grid>
@@ -186,6 +191,7 @@ function FormCustom({ funcionarios, dispatch }) {
             variant="contained"
             color="primary"
             className={classes.button}
+            data-testid="form-custom-btn-salvar"
           >
             Salvar
           </Button>
