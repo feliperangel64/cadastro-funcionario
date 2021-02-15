@@ -19,32 +19,25 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-function Form({ funcionarios, dispatch }) {
+function FormCustom({ funcionarios, dispatch }) {
   const classes = useStyles()
   const history = useHistory()
-  const { id } = useParams()
+  const { id: idParam } = useParams()
 
   const [state, setState] = useState({
-    Nome: '',
-    Cpf: '',
-    Salario: '',
-    Desconto: '',
-    Dependentes: '',
+    nome: '',
+    cpf: '',
+    salario: '',
+    desconto: '',
+    dependentes: '',
   })
 
   useEffect(() => {
-    if (id) {
+    if (idParam) {
       const editFuncionario = funcionarios.filter(
-        (funcionario) => funcionario.id == id,
+        (funcionario) => funcionario.id == idParam,
       )[0]
-      setState({
-        Id: editFuncionario.id,
-        Nome: editFuncionario.nome,
-        Cpf: editFuncionario.cpf,
-        Salario: editFuncionario.salario,
-        Desconto: editFuncionario.desconto,
-        Dependentes: editFuncionario.dependentes,
-      })
+      setState({ ...editFuncionario })
     }
   }, [])
 
@@ -56,37 +49,37 @@ function Form({ funcionarios, dispatch }) {
   const calculaSalarioBase = () => {
     let salarioBase = 0
     const deducaoDependente = 164.56
-    const { Salario, Desconto, Dependentes } = state
-    salarioBase = Salario - Desconto - deducaoDependente * Dependentes
+    const { salario, desconto, dependentes } = state
+    salarioBase = salario - desconto - deducaoDependente * dependentes
     return salarioBase
   }
 
   //Tabela progressiva do IRRF
   const getValoresIrpf = () => {
-    const { Salario } = state
+    const { salario } = state
 
     //Até R$ 1.903,98 Isento R$ 0,00
-    if (Salario <= 1903.98) {
+    if (salario <= 1903.98) {
       return { aliquota: 0, parcela: 0 }
     }
 
     //De R$ 1.903,99 até R$ 2.826,65 7,5% R$ 142,80
-    if (Salario >= 1903.99 && Salario <= 2826.65) {
+    if (salario >= 1903.99 && salario <= 2826.65) {
       return { aliquota: 7.5 / 100, parcela: 142.8 }
     }
 
     //De R$ 2.826,66 até R$ 3.751,05 15% R$ 354,80
-    if (Salario >= 2826.66 && Salario <= 3751.05) {
+    if (salario >= 2826.66 && salario <= 3751.05) {
       return { aliquota: 15.0 / 100, parcela: 354.8 }
     }
 
     //De R$ 3.751,06 até R$ 4.664,68 22,5% R$ 636,13
-    if (Salario >= 3751.06 && Salario <= 4664.68) {
+    if (salario >= 3751.06 && salario <= 4664.68) {
       return { aliquota: 22.5 / 100, parcela: 636.13 }
     }
 
     //Acima de R$ 4.664,68 27,5% R$869,36
-    if (Salario > 4664.68) {
+    if (salario > 4664.68) {
       return { aliquota: 27.5 / 100, parcela: 869.36 }
     }
   }
@@ -103,25 +96,12 @@ function Form({ funcionarios, dispatch }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (id) {
-      const editFuncionario = {
-        id: state.Id,
-        nome: state.Nome,
-        cpf: state.Cpf,
-        salario: state.Salario,
-        desconto: state.Desconto,
-        dependentes: state.Dependentes,
-        descontoIrpf: calculaDescontoIprf(),
-      }
-      dispatch(FuncionarioAction.Edit(editFuncionario))
+    if (idParam) {
+      dispatch(FuncionarioAction.Edit({ ...state }))
     } else {
       const novoFuncionario = {
+        ...state,
         id: funcionarios.length + 1,
-        nome: state.Nome,
-        cpf: state.Cpf,
-        salario: state.Salario,
-        desconto: state.Desconto,
-        dependentes: state.Dependentes,
         descontoIrpf: calculaDescontoIprf(),
       }
       dispatch(FuncionarioAction.Add(novoFuncionario))
@@ -129,7 +109,7 @@ function Form({ funcionarios, dispatch }) {
     history.push('/')
   }
 
-  const { Nome, Cpf, Salario, Desconto, Dependentes } = state
+  const { nome, cpf, salario, desconto, dependentes } = state
 
   return (
     <>
@@ -140,65 +120,66 @@ function Form({ funcionarios, dispatch }) {
         <Grid container spacing={3}>
           <Grid item xs={12}>
             <TextField
-              required
               id="nome"
-              name="Nome"
+              name="nome"
               label="Nome"
-              fullWidth
-              value={Nome}
+              value={nome}
               onChange={handleChange}
               inputProps={{ maxLength: 100 }}
+              fullWidth
+              required
             />
           </Grid>
 
           <Grid item xs={12}>
             <TextField
-              required
               id="cpf"
-              name="Cpf"
+              name="cpf"
               label="CPF"
-              fullWidth
-              value={Cpf}
+              value={cpf}
               onChange={handleChange}
+              fullWidth
+              required
             />
           </Grid>
 
           <Grid item xs={12}>
             <TextField
-              required
               id="salario"
-              name="Salario"
-              label="Salário"
-              fullWidth
-              value={Salario}
+              name="salario"
+              label="Salário bruto"
+              value={salario}
               onChange={handleChange}
+              fullWidth
+              required
             />
           </Grid>
 
           <Grid item xs={12}>
             <TextField
-              required
               id="desconto"
-              name="Desconto"
-              label="Desconto"
-              fullWidth
-              value={Desconto}
+              name="desconto"
+              label="Desconto da previdência"
+              value={desconto}
               onChange={handleChange}
+              fullWidth
+              required
             />
           </Grid>
 
           <Grid item xs={12}>
             <TextField
-              required
               id="dependentes"
-              name="Dependentes"
-              label="Dependentes"
-              fullWidth
-              value={Dependentes}
+              name="dependentes"
+              label="Número de dependentes"
+              value={dependentes}
               onChange={handleChange}
+              fullWidth
+              required
             />
           </Grid>
         </Grid>
+
         <div className={classes.buttons}>
           <Button
             type="submit"
@@ -213,6 +194,7 @@ function Form({ funcionarios, dispatch }) {
     </>
   )
 }
+
 export default connect((state) => ({
   funcionarios: state.funcionarioReducer.funcionarios,
-}))(Form)
+}))(FormCustom)
