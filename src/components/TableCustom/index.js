@@ -1,7 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { Link } from 'react-router-dom'
-import { Edit } from '@material-ui/icons'
 import {
   Table,
   TableBody,
@@ -11,6 +9,8 @@ import {
   Typography,
   Grid,
 } from '@material-ui/core'
+import { Edit } from '@material-ui/icons'
+import { Link } from 'react-router-dom'
 import ModalCustom from '../../components/ModalCustom'
 
 const TableCustom = ({ funcionarios }) => {

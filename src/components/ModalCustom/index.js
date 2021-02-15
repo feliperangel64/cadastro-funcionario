@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import {
   Button,
@@ -12,8 +12,8 @@ import { Delete } from '@material-ui/icons/'
 import { connect } from 'react-redux'
 import * as FuncionarioAction from '../../store/actions/funcionario'
 
-function AlertDialog({ id, dispatch }) {
-  const [open, setOpen] = React.useState(false)
+function ModalCustom({ id, dispatch }) {
+  const [open, setOpen] = useState(false)
 
   const handleClickOpen = () => {
     setOpen(true)
@@ -63,8 +63,8 @@ function AlertDialog({ id, dispatch }) {
   )
 }
 
-AlertDialog.propTypes = {
+ModalCustom.propTypes = {
   id: PropTypes.any,
 }
 
-export default connect()(AlertDialog)
+export default connect()(ModalCustom)
