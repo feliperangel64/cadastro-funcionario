@@ -1,8 +1,8 @@
 import React from 'react'
 import { BrowserRouter, Switch, Route } from 'react-router-dom'
-import Main from '../pages/main'
-import Add from '../pages/add'
-import Edit from '../pages/edit'
+import Main from '../pages/Main'
+import Add from '../pages/Add'
+import Edit from '../pages/Edit'
 
 const Routes = () => {
   return (

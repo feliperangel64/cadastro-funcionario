@@ -1,20 +1,8 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/core/styles'
-import { Paper, Link, Typography } from '@material-ui/core'
-import Form from '../../components/FormCustom'
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="">
-        Enterprise
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  )
-}
+import { Paper, Typography } from '@material-ui/core'
+import FormCustom from '../../components/FormCustom'
+import FooterCustom from '../../components/FooterCustom'
 
 const useStyles = makeStyles((theme) => ({
   layout: {
@@ -39,20 +27,20 @@ const useStyles = makeStyles((theme) => ({
   },
 }))
 
-export default function Checkout() {
+export default function Edit() {
   const classes = useStyles()
 
   return (
-    <React.Fragment>
+    <>
       <main className={classes.layout}>
         <Paper className={classes.paper}>
           <Typography component="h1" variant="h4" align="center">
             Edição
           </Typography>
-          <Form />
+          <FormCustom />
         </Paper>
-        <Copyright />
+        <FooterCustom />
       </main>
-    </React.Fragment>
+    </>
   )
 }

@@ -37,7 +37,7 @@ export default function AppBarCustom() {
             <Menu />
           </IconButton>
           <Typography variant="h6" className={classes.title}>
-            Cadastro de Funcionário
+            Seus Funcionários
           </Typography>
           <Button color="inherit">Login</Button>
         </Toolbar>

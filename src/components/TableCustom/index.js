@@ -16,7 +16,7 @@ import ModalCustom from '../../components/ModalCustom'
 const TableCustom = ({ funcionarios }) => {
   return (
     <>
-      <Typography>Funcionários</Typography>
+      <Typography>Seus Funcionários</Typography>
       <Table size="small">
         <TableHead>
           <TableRow>
